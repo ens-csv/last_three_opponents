@@ -1,4 +1,5 @@
 import requests
+import json
 
 def get_last_three_opponents(username):
     url = f"https://lichess.org/api/games/user/{username}?max=3"
@@ -12,8 +13,8 @@ def get_last_three_opponents(username):
     opponents = []
 
     for game in games:
-        game_data = eval(game)
-        if game_data["players"]["white"]["user"]["name"] == username:
+        game_data = json.loads(game)
+        if game_data["players"]["white"]["user"]["name"].lower() == username.lower():
             opponent = game_data["players"]["black"]["user"]["name"]
         else:
             opponent = game_data["players"]["white"]["user"]["name"]
